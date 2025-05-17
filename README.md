@@ -74,6 +74,9 @@ prebuilt firmware file [pmemtest.uf2](firmware/pmemtest.uf2) to this device, and
 program itself. Reset the power and you should see a menu of chips on the LCD
 screen.
 
+Note: This code has been modified to accomodate the EC11 type rotary encoder which is readily available from many Aliexpress sellers.
+To install it the board must be modified cutting 2 traces and bridging them to the appropriate solder pads as the pinouts between the 2 encoder types is slightly different but nothing major. It's easily worked out by checking out the datasheets. The bottom 3 pins in the EC11 are ACB while in the original Panasonic EVE are ABB and one of the top 2 is the C (common). Cut the trace between B-B and the trace going to the center pin (B). Then bodge beween the rightmost (ex B now A) to the trace going to the center and bodge the center to any GND pad. 
+
 ## Using the DRAM Tester
 
 Before starting, connect the tester to a power source:
@@ -89,6 +92,7 @@ test. Often the speed grade is marked on the chip as a suffix. For example, -15
 typically means 150ns. If you're not sure, pick the slowest speed.
 5. If you are using an external bench power supply to supply -5V and +12V, turn it on now. If you soldered in the on-board voltage converter modules, you don't need to do anything. Push the top of the selection knob to continue.
 6. The test runs. You will see a red "X" if the test fails or a green checkmark if the test passes.
+7. You can press OK to repeat the test with the current settings or "Back" to exit.
 
 Note: The visualization pane on the left is just for entertainment and doesn't
 really represent bad bits.
