@@ -615,6 +615,7 @@ void do_status()
             if (retval == 0) {
                 paint_status(120, 35, 110, "Passed!");
                 draw_icon(STATUS_ICON_X, STATUS_ICON_Y, &check_icon);
+                paint_status(120, 105, 110, "OK to Rerun");
             } else {
                 draw_icon(STATUS_ICON_X, STATUS_ICON_Y, &error_icon);
                 if (chip_list[main_menu.sel_line]->bits == 4) {
@@ -653,7 +654,10 @@ void button_action()
         case DO_TEST:
             break;
         case TEST_RESULTS:
-            // TODO: Maybe make it easy to run the test again?
+                gui_state = DO_TEST;
+            show_test_gui();
+            start_the_ram_test();
+            // Pressing OK will restart same test
             break;
         default:
             gui_state = MAIN_MENU;
@@ -719,7 +723,7 @@ void do_encoder()
     uint8_t st;
     uint8_t wheel_state;
 
-    wheel_state = do_debounce(&pin_a) | (do_debounce(&pin_b) << 1);
+    wheel_state = do_debounce(&pin_a) | (do_debounce(&pin_b) << 2);     // set this to 1 for the original encoder else to 2 for the EC11
     st = wheel_state | (wheel_state_old << 4);
     if (wheel_state != wheel_state_old) {
         // Present state, next state
